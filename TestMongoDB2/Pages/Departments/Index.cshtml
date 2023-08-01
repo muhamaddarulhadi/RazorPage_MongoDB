@@ -1,0 +1,39 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">List of Departments</h1>
+    <a class="btn btn-primary" asp-page="Create">Add</a>
+    <table class="table table-bordered table-striped table-hover"> 
+        <thead>
+            <tr>
+                <th>NO</th>
+                <th>Name</th>
+                <th>Institution</th>
+                <th>Address</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var department in Model.Departments)
+            {
+                <tr>
+                    <td>@(Model.Departments.IndexOf(department) + 1)</td>
+                    <td><a class="btn btn-link" asp-page="Edit" asp-route-id="@department.Id">@department.DeptName</a></td>
+                    <td>@department.Institution</td>
+                    <td>@department.Address</td>
+                    <td>
+                        <form method="post" onsubmit ="return confirm('Are you sure to delete?')">
+                            <input type="hidden" value="@department.Id" name="id">
+                            <button asp-page-handler="Delete" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+</div>
